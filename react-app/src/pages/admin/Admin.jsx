@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import AdminLayout from './AdminLayout';
 import api from '../../api';
+import Loader from '../../components/Loader';
 import './Admin.css';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
@@ -33,11 +34,7 @@ export default function Admin() {
   }, [user, loading, navigate]);
 
   // Show nothing while auth state is being restored from localStorage
-  if (loading) return (
-    <div style={{ display:'flex', alignItems:'center', justifyContent:'center', height:'100vh', background:'#f0f4f8', fontSize:16, color:'#555' }}>
-      Loading…
-    </div>
-  );
+  if (loading) return <Loader fullScreen />;
 
   const loadOrders = useCallback(async () => {
     const data = await api.getOrders();

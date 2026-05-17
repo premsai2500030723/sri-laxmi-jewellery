@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import { useAuth } from '../context/AuthContext';
 import AuthModal from '../components/AuthModal';
+import Loader from '../components/Loader';
 import './Customize.css';
 
 const initialForm = {
@@ -206,6 +207,7 @@ export default function Customize() {
 
       {/* Sign-in modal */}
       {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
+      {loading && <Loader fullScreen />}
     </div>
   );
 }

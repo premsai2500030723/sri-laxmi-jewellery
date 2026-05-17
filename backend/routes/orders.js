@@ -4,11 +4,12 @@ const { supabase } = require('../supabaseClient');
 
 // GET /api/orders — list all orders
 router.get('/', async (req, res) => {
-    const { data, error } = await supabase
-        .from('orders')
-        .select('*')
-        .order('created_at', { ascending: false });
+    const { email } = req.query;
 
+    let query = supabase.from('orders').select('*').order('created_at', { ascending: false });
+    if (email) query = query.eq('email', email);
+
+    const { data, error } = await query;
     if (error) return res.status(500).json({ error: error.message });
     res.json(data || []);
 });
@@ -46,7 +47,8 @@ router.post('/', async (req, res) => {
 router.patch('/:id/status', async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
-    if (!['Pending', 'Approved', 'Rejected'].includes(status)) {
+    const allowed = ['Pending', 'Approved', 'Packing', 'Out for Delivery', 'Delivered', 'Rejected'];
+    if (!allowed.includes(status)) {
         return res.status(400).json({ error: 'Invalid status' });
     }
 

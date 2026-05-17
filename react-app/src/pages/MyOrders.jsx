@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import AuthModal from '../components/AuthModal';
+import Loader from '../components/Loader';
 import api from '../api';
 import './MyOrders.css';
 
@@ -93,7 +94,7 @@ export default function MyOrders() {
       </div>
 
       {loading ? (
-        <div className="mo-loading">Loading your orders…</div>
+        <Loader />
       ) : orders.length === 0 ? (
         <div className="mo-empty">
           <div className="mo-empty-icon">📭</div>
