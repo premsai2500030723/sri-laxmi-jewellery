@@ -33,10 +33,12 @@ export function AuthProvider({ children }) {
   };
 
   const signOut = async () => {
-    await api.signOut();
-    await supabase.auth.signOut();
+    // Clear local state immediately — don't wait for backend
     setUser(null);
     localStorage.removeItem('slj_user');
+    // Then clean up backend/supabase session in background
+    try { await api.signOut(); } catch { /* ignore */ }
+    try { await supabase.auth.signOut(); } catch { /* ignore */ }
   };
 
   const signInWithGoogle = async () => {

@@ -136,3 +136,10 @@
 
 .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(184,134,11,0.4); }
 .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* ── READ-ONLY FIELD ──────────────────────────────────────── */
+.readonly-field {
+  background: #f0f0f0 !important;
+  color: #888 !important;
+  cursor: not-allowed;
+}

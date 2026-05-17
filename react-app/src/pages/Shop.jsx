@@ -2,28 +2,29 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import AuthModal from '../components/AuthModal';
 import api from '../api';
 import './Shop.css';
 
 // Static product data — images from /public/images/
 const staticProducts = {
   necklaces: [
-    { id: 's1', name: 'Gold Necklace', price: '₹ 55,000', purity: '24k Gold', image: '/images/type1 A.jpg', desc: 'Beautiful 24k gold necklace with intricate design. Perfect for special occasions and daily wear.' },
-    { id: 's2', name: 'Gold Necklace', price: '₹ 55,000', purity: '24k Gold', image: '/images/type1 B.jpg', desc: 'Elegant gold necklace with diamond studding. Handcrafted with premium quality materials.' },
-    { id: 's3', name: 'Gold Necklace', price: '₹ 55,000', purity: '22k Gold', image: '/images/type1 C.jpg', desc: 'Stunning gold necklace with modern design. Lightweight and comfortable for everyday use.' },
-    { id: 's4', name: 'Gold Necklace', price: '₹ 55,000', purity: '24k Gold', image: '/images/type1 D.jpg', desc: 'Sparkling gold necklace that adds elegance to any outfit. Premium quality guaranteed.' },
+    { id: 's1', name: 'Gold Necklace',       price: '₹ 55,000', purity: '24k Gold',       image: '/images/type1 A.jpg', desc: 'Beautiful 24k gold necklace with intricate design. Perfect for special occasions and daily wear.' },
+    { id: 's2', name: 'Gold Necklace',       price: '₹ 55,000', purity: '24k Gold',       image: '/images/type1 B.jpg', desc: 'Elegant gold necklace with diamond studding. Handcrafted with premium quality materials.' },
+    { id: 's3', name: 'Gold Necklace',       price: '₹ 55,000', purity: '22k Gold',       image: '/images/type1 C.jpg', desc: 'Stunning gold necklace with modern design. Lightweight and comfortable for everyday use.' },
+    { id: 's4', name: 'Gold Necklace',       price: '₹ 55,000', purity: '24k Gold',       image: '/images/type1 D.jpg', desc: 'Sparkling gold necklace that adds elegance to any outfit. Premium quality guaranteed.' },
   ],
   rings: [
-    { id: 's5', name: 'Diamond Ring', price: '₹ 85,000', purity: 'Diamond', image: '/images/type2 A.webp', desc: 'Classic diamond ring with lustrous finish. Timeless piece for any jewellery collection.' },
-    { id: 's6', name: 'Gold Ring', price: '₹ 38,000', purity: '22k Gold', image: '/images/type2 B.webp', desc: 'Premium gold ring with secure setting. Perfect for everyday elegance.' },
-    { id: 's7', name: 'Silver Pendant Ring', price: '₹ 28,000', purity: 'Silver', image: '/images/type2 C.webp', desc: 'Delicate silver pendant ring with unique design. Adds charm to any occasion.' },
-    { id: 's8', name: 'Ruby Ring', price: '₹ 65,000', purity: 'Ruby · Gold', image: '/images/type 2 D.webp', desc: 'Exquisite ruby ring with gold setting. A statement piece for special moments.' },
+    { id: 's5', name: 'Diamond Ring',        price: '₹ 85,000', purity: 'Diamond',        image: '/images/type2 A.webp', desc: 'Classic diamond ring with lustrous finish. Timeless piece for any jewellery collection.' },
+    { id: 's6', name: 'Gold Ring',           price: '₹ 38,000', purity: '22k Gold',       image: '/images/type2 B.webp', desc: 'Premium gold ring with secure setting. Perfect for everyday elegance.' },
+    { id: 's7', name: 'Silver Pendant Ring', price: '₹ 28,000', purity: 'Silver',         image: '/images/type2 C.webp', desc: 'Delicate silver pendant ring with unique design. Adds charm to any occasion.' },
+    { id: 's8', name: 'Ruby Ring',           price: '₹ 65,000', purity: 'Ruby · Gold',   image: '/images/type 2 D.webp', desc: 'Exquisite ruby ring with gold setting. A statement piece for special moments.' },
   ],
   earrings: [
-    { id: 's9',  name: 'Emerald Earrings',     price: '₹ 72,000', purity: 'Emerald · Gold', image: '/images/type3 A.jpg', desc: 'Gorgeous emerald earrings with intricate gold work. Luxury meets craftsmanship.' },
-    { id: 's10', name: '22k Earring',           price: '₹ 32,000', purity: '22k Gold',       image: '/images/type3 B.jpg', desc: 'Sophisticated gold earring with minimalist design. Durable and elegant.' },
-    { id: 's11', name: 'Gold Silver Earrings',  price: '₹ 32,000', purity: 'Gold · Silver',  image: '/images/type3 C.jpg', desc: 'Beautiful dual-tone earrings with silver setting. Perfect for evening wear.' },
-    { id: 's12', name: 'Gold Earrings',         price: '₹ 32,000', purity: '24k Gold',       image: '/images/type3 D.jpg', desc: 'Traditional gold earrings with modern touch. Comfortable and stylish accessory.' },
+    { id: 's9',  name: 'Emerald Earrings',    price: '₹ 72,000', purity: 'Emerald · Gold', image: '/images/type3 A.jpg', desc: 'Gorgeous emerald earrings with intricate gold work. Luxury meets craftsmanship.' },
+    { id: 's10', name: '22k Earring',         price: '₹ 32,000', purity: '22k Gold',       image: '/images/type3 B.jpg', desc: 'Sophisticated gold earring with minimalist design. Durable and elegant.' },
+    { id: 's11', name: 'Gold Silver Earrings',price: '₹ 32,000', purity: 'Gold · Silver',  image: '/images/type3 C.jpg', desc: 'Beautiful dual-tone earrings with silver setting. Perfect for evening wear.' },
+    { id: 's12', name: 'Gold Earrings',       price: '₹ 32,000', purity: '24k Gold',       image: '/images/type3 D.jpg', desc: 'Traditional gold earrings with modern touch. Comfortable and stylish accessory.' },
   ],
 };
 
@@ -33,6 +34,7 @@ export default function Shop() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [adminProducts, setAdminProducts] = useState([]);
   const [toast, setToast] = useState('');
+  const [authOpen, setAuthOpen] = useState(false);
   const { addToCart, setCartOpen } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -48,31 +50,40 @@ export default function Shop() {
     setTimeout(() => setToast(''), 3000);
   };
 
-  const handleAddToCart = async (name, price, image) => {
+  // ── Guard: open sign-in modal if not logged in ─────────────
+  const requireAuth = (callback) => {
     if (!user) {
-      showToast('Please sign in to add items to cart');
+      setAuthOpen(true);
       return;
     }
-    const result = await addToCart(name, price, image);
-    if (result?.error === 'not_signed_in') {
-      showToast('Please sign in to add items to cart');
-    } else {
-      showToast(`${name} added to cart`);
-      setCartOpen(true);
-    }
+    callback();
+  };
+
+  const handleAddToCart = (name, price, image) => {
+    requireAuth(async () => {
+      const result = await addToCart(name, price, image);
+      if (result?.error) {
+        showToast('Could not add to cart. Try again.');
+      } else {
+        showToast(`${name} added to cart`);
+        setCartOpen(true);
+      }
+    });
   };
 
   const handleBuyNow = (product) => {
-    sessionStorage.setItem('selectedProduct', JSON.stringify(product));
-    navigate('/buy');
+    requireAuth(() => {
+      sessionStorage.setItem('selectedProduct', JSON.stringify(product));
+      navigate('/buy');
+    });
   };
 
   const showSection = (section) => {
     if (activeFilter === 'All') return true;
-    if (activeFilter === 'Necklaces' && section === 'necklaces') return true;
-    if (activeFilter === 'Rings' && section === 'rings') return true;
-    if (activeFilter === 'Earrings' && section === 'earrings') return true;
-    if (activeFilter === 'New Arrivals' && section === 'newArrivals') return true;
+    if (activeFilter === 'Necklaces'   && section === 'necklaces')   return true;
+    if (activeFilter === 'Rings'       && section === 'rings')       return true;
+    if (activeFilter === 'Earrings'    && section === 'earrings')    return true;
+    if (activeFilter === 'New Arrivals'&& section === 'newArrivals') return true;
     return false;
   };
 
@@ -85,7 +96,7 @@ export default function Shop() {
         <h3>{product.name}</h3>
         <p>{product.desc || 'Premium jewellery from our collection.'}</p>
         <div className="card-actions">
-          <button className="buy-btn" onClick={() => handleBuyNow(product)}>Buy Now</button>
+          <button className="buy-btn"  onClick={() => handleBuyNow(product)}>Buy Now</button>
           <button className="cart-btn" onClick={() => handleAddToCart(product.name, product.price, product.image)}>+ Cart</button>
         </div>
       </div>
@@ -169,6 +180,9 @@ export default function Shop() {
 
       {/* Toast */}
       {toast && <div className="cart-toast">{toast}</div>}
+
+      {/* Sign-in modal — shown when unauthenticated user clicks Buy/Cart */}
+      {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
     </div>
   );
 }

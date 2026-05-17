@@ -323,11 +323,24 @@ export default function Admin() {
                   <td><span className={`badge ${o.status}`}>{o.status}</span></td>
                   <td>{o.created_at ? new Date(o.created_at).toLocaleDateString() : ''}</td>
                   <td>
-                    {o.status === 'Pending' && (
-                      <>
-                        <button className="btn-approve" onClick={() => updateStatus(o.id, 'Approved')}>✓ Approve</button>
-                        <button className="btn-reject"  onClick={() => updateStatus(o.id, 'Rejected')}>✗ Reject</button>
-                      </>
+                    {o.status !== 'Delivered' && o.status !== 'Rejected' && (
+                      <select
+                        className="status-select"
+                        value={o.status}
+                        onChange={(e) => updateStatus(o.id, e.target.value)}
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Packing">Packing</option>
+                        <option value="Out for Delivery">Out for Delivery</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Rejected">Rejected</option>
+                      </select>
+                    )}
+                    {(o.status === 'Delivered' || o.status === 'Rejected') && (
+                      <span className={`badge ${o.status === 'Delivered' ? 'Approved' : 'Rejected'}`}>
+                        {o.status}
+                      </span>
                     )}
                     <button className="btn-delete" onClick={() => deleteOrder(o.id)}>🗑</button>
                   </td>

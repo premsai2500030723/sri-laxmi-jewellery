@@ -238,3 +238,22 @@
   .admin-main { margin-left: 0; padding: 16px; }
   .stats-row { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ── STATUS SELECT ────────────────────────────────────────── */
+.status-select {
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  background: white;
+  margin-right: 4px;
+  outline: none;
+}
+
+.status-select:focus { border-color: #3498db; }
+
+/* ── EXTENDED BADGES ──────────────────────────────────────── */
+.badge.Packing           { background: #cce5ff; color: #004085; }
+.badge.Out-for-Delivery  { background: #fff3cd; color: #856404; }
+.badge.Delivered         { background: #d4edda; color: #155724; }

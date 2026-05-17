@@ -9,6 +9,7 @@ import LivePrices from './pages/LivePrices';
 import Customize from './pages/Customize';
 import Buy from './pages/Buy';
 import OrderConfirmation from './pages/OrderConfirmation';
+import MyOrders from './pages/MyOrders';
 import Admin from './pages/admin/Admin';
 import './App.css';
 
@@ -33,6 +34,7 @@ function AppContent() {
                 <Route path="/customize"           element={<Customize />} />
                 <Route path="/buy"                 element={<Buy />} />
                 <Route path="/order-confirmation"  element={<OrderConfirmation />} />
+                <Route path="/my-orders"           element={<MyOrders />} />
               </Routes>
             </>
           }

@@ -62,8 +62,11 @@ const api = {
   },
 
   // ── Orders ────────────────────────────────────────────────────────────
-  async getOrders() {
-    const res = await fetch(`${API_BASE}/orders`);
+  async getOrders(email = null) {
+    const url = email
+      ? `${API_BASE}/orders?email=${encodeURIComponent(email)}`
+      : `${API_BASE}/orders`;
+    const res = await fetch(url);
     return res.json();
   },
 

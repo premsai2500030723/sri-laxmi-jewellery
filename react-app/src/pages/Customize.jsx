@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
+import { useAuth } from '../context/AuthContext';
+import AuthModal from '../components/AuthModal';
 import './Customize.css';
 
 const initialForm = {
@@ -16,7 +18,16 @@ export default function Customize() {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState(initialErrors);
   const [loading, setLoading] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
   const navigate = useNavigate();
+  const { user } = useAuth();
+
+  // Pre-fill email from logged-in user
+  useEffect(() => {
+    if (user?.email) {
+      setForm((prev) => ({ ...prev, email: user.email }));
+    }
+  }, [user]);
 
   const validate = () => {
     const errs = { ...initialErrors };
@@ -52,13 +63,17 @@ export default function Customize() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Gate behind sign-in
+    if (!user) { setAuthOpen(true); return; }
     if (!validate()) return;
     setLoading(true);
 
     try {
+      // Always use logged-in user's email
+      const orderEmail = user.email;
       const result = await api.placeOrder({
         name: form.name,
-        email: form.email,
+        email: orderEmail,
         phone: form.phone,
         org: form.org,
         type: form.model,
@@ -78,7 +93,7 @@ export default function Customize() {
 
       const orderData = {
         product: { name: `Custom ${form.model} — ${form.grams}`, price: 'Custom', image: '' },
-        customer: { fullName: form.name, email: form.email, phone: form.phone, address: form.org || 'N/A', quantity: form.items, paymentMethod: 'Custom Order' },
+        customer: { fullName: form.name, email: orderEmail, phone: form.phone, address: form.org || 'N/A', quantity: form.items, paymentMethod: 'Custom Order' },
         orderDate: new Date().toLocaleString(),
         orderId: result.order_id || ('ORD' + Date.now()),
       };
@@ -109,7 +124,13 @@ export default function Customize() {
 
           <div className="field">
             <label htmlFor="email">Email <span className="req">*</span></label>
-            <input id="email" name="email" type="email" autoComplete="email" value={form.email} onChange={handleChange} />
+            <input
+              id="email" name="email" type="email"
+              value={user?.email || form.email}
+              readOnly={!!user}
+              onChange={handleChange}
+              className={user ? 'readonly-field' : ''}
+            />
             {errors.email && <span className="error">{errors.email}</span>}
           </div>
 
@@ -182,6 +203,9 @@ export default function Customize() {
           </div>
         </form>
       </main>
+
+      {/* Sign-in modal */}
+      {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
     </div>
   );
 }

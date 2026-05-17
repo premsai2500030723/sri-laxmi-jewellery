@@ -135,6 +135,39 @@
 
 .back-btn:hover { background: #b8860b; color: white; }
 
+/* ── SIGN IN NUDGE ────────────────────────────────────────── */
+.signin-nudge {
+  background: #fff8e1;
+  border: 1px solid #f39c12;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #856404;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.signin-nudge button {
+  background: none;
+  border: none;
+  color: #b8860b;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
 @media (max-width: 768px) {
   .buy-container { grid-template-columns: 1fr; }
+}
+
+/* ── READ-ONLY FIELD ──────────────────────────────────────── */
+.readonly-field {
+  background: #f0f0f0 !important;
+  color: #888 !important;
+  cursor: not-allowed;
 }

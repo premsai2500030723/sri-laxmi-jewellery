@@ -1,23 +1,35 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import AuthModal from '../components/AuthModal';
 import api from '../api';
 import './Buy.css';
 
 export default function Buy() {
+  const { user } = useAuth();
   const [product, setProduct] = useState(null);
-  const [form, setForm] = useState({ fullName: '', email: '', phone: '', address: '', quantity: 1, paymentMethod: '' });
+  const [authOpen, setAuthOpen] = useState(false);
+  const [form, setForm] = useState({
+    fullName: '', email: '', phone: '', address: '', quantity: 1, paymentMethod: '',
+  });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const data = sessionStorage.getItem('selectedProduct');
     if (!data) {
-      alert('No product selected. Redirecting to products page.');
       navigate('/shop');
       return;
     }
     setProduct(JSON.parse(data));
   }, [navigate]);
+
+  // Pre-fill email from logged-in user
+  useEffect(() => {
+    if (user?.email) {
+      setForm((prev) => ({ ...prev, email: user.email }));
+    }
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,12 +38,16 @@ export default function Buy() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user) { setAuthOpen(true); return; }
     setLoading(true);
+
+    // Always use the logged-in user's email — never trust the form email field
+    const orderEmail = user.email;
 
     try {
       const orderResult = await api.placeOrder({
         name: form.fullName,
-        email: form.email,
+        email: orderEmail,
         phone: form.phone,
         address: form.address,
         product_name: product.name,
@@ -49,9 +65,10 @@ export default function Buy() {
 
       const orderData = {
         product,
-        customer: form,
+        customer: { ...form, email: orderEmail },
         orderDate: new Date().toLocaleString(),
         orderId: orderResult.order_id || ('ORD' + Date.now()),
+        dbOrderId: orderResult.id,
       };
 
       sessionStorage.setItem('orderData', JSON.stringify(orderData));
@@ -69,7 +86,12 @@ export default function Buy() {
       <div className="buy-container">
         {/* Product Section */}
         <div className="product-section">
-          <img src={product.image} alt={product.name} className="product-image" onError={(e) => { e.target.style.display = 'none'; }} />
+          <img
+            src={product.image}
+            alt={product.name}
+            className="product-image"
+            onError={(e) => { e.target.style.display = 'none'; }}
+          />
           <div className="product-info">
             <h1>{product.name}</h1>
             <p>{product.description}</p>
@@ -80,32 +102,44 @@ export default function Buy() {
         {/* Order Form */}
         <div className="order-section">
           <h2>Order Details</h2>
+
+          {/* Sign-in nudge if not logged in */}
+          {!user && (
+            <div className="signin-nudge">
+              <span>⚠ Please </span>
+              <button onClick={() => setAuthOpen(true)}>sign in</button>
+              <span> to place an order</span>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="fullName">Full Name *</label>
               <input type="text" id="fullName" name="fullName" value={form.fullName} onChange={handleChange} required />
             </div>
-
             <div className="form-group">
-              <label htmlFor="email">Email Address *</label>
-              <input type="email" id="email" name="email" value={form.email} onChange={handleChange} required />
+              <label htmlFor="email">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={user?.email || ''}
+                readOnly
+                className="readonly-field"
+              />
             </div>
-
             <div className="form-group">
               <label htmlFor="phone">Phone Number *</label>
               <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" value={form.phone} onChange={handleChange} required />
             </div>
-
             <div className="form-group">
               <label htmlFor="address">Delivery Address *</label>
               <textarea id="address" name="address" rows="3" value={form.address} onChange={handleChange} required />
             </div>
-
             <div className="form-group">
               <label htmlFor="quantity">Quantity *</label>
               <input type="number" id="quantity" name="quantity" min="1" value={form.quantity} onChange={handleChange} required />
             </div>
-
             <div className="form-group">
               <label htmlFor="paymentMethod">Payment Method *</label>
               <select id="paymentMethod" name="paymentMethod" value={form.paymentMethod} onChange={handleChange} required>
@@ -126,6 +160,8 @@ export default function Buy() {
           </form>
         </div>
       </div>
+
+      {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
     </div>
   );
 }
