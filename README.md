@@ -2,6 +2,10 @@
 
 A full-stack gold & silver jewellery e-commerce platform built with React + Node.js + Supabase.
 
+![Sri Laxmi Jewellery](https://sri-laxmi-jewellery.vercel.app)
+
+> 🚀 **Live Demo:** [sri-laxmi-jewellery.vercel.app](https://sri-laxmi-jewellery.vercel.app)
+
 ---
 
 ## 🌐 Live Demo
@@ -104,11 +108,11 @@ npm install
 Create `backend/.env`:
 ```env
 PORT=3000
-SUPABASE_URL=https://jouezsefomaryfqchdjl.supabase.co
+SUPABASE_URL=your_supabase_project_url
 SUPABASE_ANON_KEY=your_anon_key
 SUPABASE_SERVICE_KEY=your_service_role_key
-ADMIN_EMAIL=admin@jewels.com
-ADMIN_PASS=Admin@1234
+ADMIN_EMAIL=your_admin_email
+ADMIN_PASS=your_admin_password
 ALLOWED_ORIGIN=http://localhost:5173
 ```
 
@@ -128,7 +132,7 @@ npm install
 Create `react-app/.env`:
 ```env
 VITE_API_BASE=http://localhost:3000/api
-VITE_SUPABASE_URL=https://jouezsefomaryfqchdjl.supabase.co
+VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_anon_key
 ```
 
@@ -213,16 +217,9 @@ CREATE POLICY "Allow all" ON cart FOR ALL USING (true) WITH CHECK (true);
 
 ## 🔑 Admin Access
 
-| Field | Value |
-|---|---|
-| Email | `admin@jewels.com` |
-| Password | `Admin@1234` |
+Admin credentials are configured via environment variables on the backend. Contact the project owner for demo access.
 
-Admin can:
-- View all orders and update delivery status
-- Add / delete products
-- View registered users and login activity
-- View order statistics
+> **Note:** RLS policies are simplified for demo purposes. In production, these would be restricted per user role.
 
 ---
 
@@ -297,3 +294,12 @@ Admin can:
 ## 📄 License
 
 MIT — free to use and modify.
+
+---
+
+## 👨‍💻 Built By
+
+**Sripada Prem Sai**  
+[GitHub](https://github.com/premsai2500030723) · [LinkedIn](https://linkedin.com/in/premsai)
+
+> Built as a full-stack portfolio project demonstrating React, Node.js, Supabase, REST APIs, Google OAuth, and cloud deployment.
