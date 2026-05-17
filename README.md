@@ -300,6 +300,6 @@ MIT — free to use and modify.
 ## 👨‍💻 Built By
 
 **Sripada Prem Sai**  
-[GitHub](https://github.com/premsai2500030723) · [LinkedIn](https://linkedin.com/in/premsai)
+[GitHub](https://github.com/premsai2500030723) · [LinkedIn](https://www.linkedin.com/in/premsai-sripada-4321303a3)
 
 > Built as a full-stack portfolio project demonstrating React, Node.js, Supabase, REST APIs, Google OAuth, and cloud deployment.
