@@ -1,0 +1,23 @@
+/* ── INDEX CSS ──────────────────────────────────────────────── */
+:root {
+  --gold: #d4af37;
+  --gold-dark: #b8960c;
+  --cream: #f5ead0;
+  --dark: #0d0a04;
+  --dark-card: #1a1208;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: #0d0a04;
+}
+
+#root {
+  min-height: 100vh;
+}

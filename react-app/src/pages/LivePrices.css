@@ -1,0 +1,46 @@
+/* ── LIVE PRICES PAGE ───────────────────────────────────────── */
+.live-prices-page {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #272626, #e5da00);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding-top: 72px;
+}
+
+.price-card {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  text-align: center;
+  width: 320px;
+}
+
+.price-card h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #e76f51;
+}
+
+.price-card button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #264653;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.2s;
+}
+
+.price-card button:hover { background-color: #1d3557; }
+.price-card button:disabled { opacity: 0.6; cursor: not-allowed; }

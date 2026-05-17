@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+react-app/node_modules/
+backend/node_modules/
+
+# Environment files — NEVER commit these
+.env
+.env.local
+.env.production
+backend/.env
+react-app/.env
+react-app/.env.production
+
+# Build output
+react-app/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db

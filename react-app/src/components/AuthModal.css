@@ -1,0 +1,202 @@
+/* ── AUTH MODAL ─────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-content {
+  background: #1a1208;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.close-modal {
+  position: absolute;
+  top: 16px; right: 20px;
+  background: none; border: none;
+  color: rgba(245, 234, 208, 0.4);
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.close-modal:hover { color: #d4af37; }
+
+.auth-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  margin-bottom: 28px;
+}
+
+.auth-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 12px;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(245, 234, 208, 0.4);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.auth-tab.active {
+  color: #d4af37;
+  border-bottom-color: #d4af37;
+}
+
+.auth-welcome {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 22px;
+  font-weight: 300;
+  color: #f5ead0;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+}
+
+fieldset {
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  padding: 0;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+fieldset legend {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(212, 175, 55, 0.6);
+  padding: 0 8px;
+  margin-left: 8px;
+}
+
+fieldset input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 10px 14px 12px;
+  font-size: 14px;
+  color: #f5ead0;
+  font-family: 'Montserrat', Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+fieldset input::placeholder { color: rgba(245, 234, 208, 0.25); }
+
+.error-msg {
+  display: block;
+  color: #f87171;
+  font-size: 12px;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.success-msg {
+  text-align: center;
+  color: #4ade80;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.success-msg button {
+  margin-top: 16px;
+  background: #d4af37;
+  color: #0d0a04;
+  border: none;
+  padding: 10px 24px;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+input[type="submit"] {
+  width: 100%;
+  background: #d4af37;
+  color: #0d0a04;
+  border: none;
+  padding: 14px;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+
+input[type="submit"]:hover { background: #b8960c; }
+input[type="submit"]:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: rgba(245, 234, 208, 0.2);
+  font-size: 12px;
+}
+
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(212, 175, 55, 0.15);
+}
+
+.divider span { color: rgba(245, 234, 208, 0.3); }
+
+.google-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  color: rgba(245, 234, 208, 0.7);
+  padding: 12px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.google-btn:hover { background: rgba(255, 255, 255, 0.1); }
+
+.auth-switch {
+  text-align: center;
+  font-size: 12px;
+  color: rgba(245, 234, 208, 0.4);
+  margin-top: 20px;
+}
+
+.auth-switch button {
+  background: none;
+  border: none;
+  color: #d4af37;
+  cursor: pointer;
+  font-size: 12px;
+  text-decoration: underline;
+}

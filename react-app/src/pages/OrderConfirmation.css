@@ -1,0 +1,122 @@
+/* ── ORDER CONFIRMATION ─────────────────────────────────────── */
+.confirmation-page {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  padding-top: 92px;
+}
+
+.confirmation-container {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 700px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.success-icon {
+  width: 80px; height: 80px;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  border-radius: 50%;
+  display: flex; justify-content: center; align-items: center;
+  margin: 0 auto 30px;
+}
+
+.success-icon svg {
+  width: 50px; height: 50px;
+  stroke: white; stroke-width: 3; fill: none;
+}
+
+.confirmation-container h1 {
+  color: #4CAF50;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 26px;
+}
+
+.order-id {
+  text-align: center;
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.order-id span { font-weight: bold; color: #333; }
+
+.product-summary {
+  background: #fff;
+  border: 2px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.product-summary h3 { color: #667eea; margin-bottom: 15px; }
+
+.order-details {
+  background: #f9f9f9;
+  padding: 25px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.order-details h3 { color: #333; margin-bottom: 15px; }
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.detail-row:last-child { border-bottom: none; }
+
+.detail-label { font-weight: 600; color: #333; }
+.detail-value { color: #666; text-align: right; }
+
+.btn-container {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.btn {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,0.6); }
+
+.btn-secondary {
+  background: white;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.btn-secondary:hover { background: #667eea; color: white; }
+
+@media (max-width: 480px) {
+  .btn-container { flex-direction: column; }
+}
